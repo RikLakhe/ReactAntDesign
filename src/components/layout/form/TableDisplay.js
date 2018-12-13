@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 
 import axios from 'axios';
 
-import {Table, Spin, Icon} from 'antd'
+import {Table, Spin, Icon,Card} from 'antd'
 
 // async function getUsers(){   try{     const res = await
 // axios.get('https://jsonplaceholder.typicode.com/users');
@@ -42,7 +42,12 @@ class TableDisplay extends Component {
             }
         ];
         return (
-            <div>
+            <Card
+                title="All User"
+                style={{
+                width: '95vw',
+                margin: 'auto'
+            }}>
                 {(loadDataSource)
                     ? <Table dataSource={dataSource} columns={columns}/>
                     : <Icon
@@ -53,7 +58,7 @@ class TableDisplay extends Component {
                     }}
                         spin/>}
 
-            </div>
+            </Card>
         )
     }
 }

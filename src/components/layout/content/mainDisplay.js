@@ -4,20 +4,22 @@ import FormDisplay from '../form/FormDisplay'
 import TableDisplay from '../form/TableDisplay'
 
 
+
 import { Card } from 'antd';
 
 class MainDisplay extends Component {
   render() {
     return (
-      <React.Fragment>
+<React.Fragment>      
         <Card
-        title="All Users"
+        title="Dashboard"
         style={{ width: '95vw', margin:'auto' }}
         >
-          <TableDisplay />
+        
+          
         </Card>
-
-      </React.Fragment>        
+        </React.Fragment>
+      
     )
   }
 }

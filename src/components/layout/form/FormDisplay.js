@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 
-import {Form, Button, Input} from 'antd';
+import {Form, Button, Input,Card} from 'antd';
 
 const FormItem = Form.Item;
 
@@ -19,7 +19,6 @@ class FormDisplay extends Component {
     handleSubmit = (e) => {
         e.preventDefault();
 
-        
         this
             .props
             .form
@@ -33,7 +32,7 @@ class FormDisplay extends Component {
                 this.state.phone = values.phone;
                 this.state.password = values.password;
             });
-            console.log('submited',this.state);
+        console.log('submited', this.state);
     }
 
     handleConfirmBlur = (e) => {
@@ -44,8 +43,8 @@ class FormDisplay extends Component {
     }
     // compareToFirstPassword = (rule, value, callback) => {     const form =
     // this.props.form;     if (value && value !== form.getFieldValue('password')) {
-    //         callback('Two passwords that you enter is inconsistent!');     } else
-    // {         callback();     } } validateToNextPassword = (rule, value,
+    //         callback('Two passwords that you enter is inconsistent!');     }
+    // else {         callback();     } } validateToNextPassword = (rule, value,
     // callback) => {     const form = this.props.form;     if (value &&
     // this.state.confirmDirty) {         form.validateFields(['confirm'], {force:
     // true});     }     callback(); }
@@ -83,8 +82,12 @@ class FormDisplay extends Component {
             }
         };
         return (
-            <React.Fragment>
-
+            <Card
+                title="Add User"
+                style={{
+                width: '95vw',
+                margin: 'auto'
+            }}>
                 <Form onSubmit={this.handleSubmit}>
                     <FormItem {...formItemLayout} label="E-mail">{getFieldDecorator('email', {
                             rules: [
@@ -124,21 +127,21 @@ class FormDisplay extends Component {
                                 }
                             ]
                         })(<Input/>)}
-                        </FormItem>
-                        <FormItem {...formItemLayout} label="Password">{getFieldDecorator('password', {
-                          rules: [{
-                                  required: true,
-                                  message: 'Please input your Password!'
-                              }
-                          ]
-                      })(<Input/>)}
-                  </FormItem>
+                    </FormItem>
+                    <FormItem {...formItemLayout} label="Password">{getFieldDecorator('password', {
+                            rules: [
+                                {
+                                    required: true,
+                                    message: 'Please input your Password!'
+                                }
+                            ]
+                        })(<Input/>)}
+                    </FormItem>
                     <FormItem {...tailFormItemLayout}>
                         <Button type="primary" htmlType="submit">Register</Button>
                     </FormItem>
                 </Form>
-
-            </React.Fragment>
+            </Card>
         )
     }
 }
