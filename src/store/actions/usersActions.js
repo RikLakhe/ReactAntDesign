@@ -1,4 +1,4 @@
-import {GET_USERS,DELETE_USER} from './types'
+import {GET_USERS,DELETE_USER,ADD_USER} from './types'
 import axios from 'axios'
 
 export const getUsers = () =>async dispatch=>{
