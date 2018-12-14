@@ -10,12 +10,15 @@ import FormDisplay from './components/layout/form/FormDisplay'
 
 import 'antd/dist/antd.css';
 
+import store from './store/store'
+import { Provider } from 'react-redux';
+
 const {Header, Content} = Layout;
 
 class App extends Component {
     render() {
         return (
-
+            <Provider store = {store}>
             <Router>
                 <Layout>
                     <Header>
@@ -34,7 +37,7 @@ class App extends Component {
 
                 </Layout>
             </Router>
-
+            </Provider>
         );
     }
 }

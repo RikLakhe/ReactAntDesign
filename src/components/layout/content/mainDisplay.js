@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 
-import FormDisplay from '../form/FormDisplay'
-import TableDisplay from '../form/TableDisplay'
+// import FormDisplay from '../form/FormDisplay'
+// import TableDisplay from '../form/TableDisplay'
 
 
 

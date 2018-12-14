@@ -1,31 +1,42 @@
 import React, {Component} from 'react'
+import PropTypes from 'prop-types'
+import {Link} from 'react-router-dom';
 
-import axios from 'axios';
+import {connect} from 'react-redux'
 
-import {Table, Spin, Icon,Card} from 'antd'
+import {getUsers} from '../../../store/actions/usersActions'
+import {deleteUser} from '../../../store/actions/usersActions'
+
+import {Table, Popconfirm, Button, Card} from 'antd'
 
 // async function getUsers(){   try{     const res = await
 // axios.get('https://jsonplaceholder.typicode.com/users');
 // console.log(res.data);     return res.data;   }catch(e){     console.log(e);
-//  return null;   } }
+// return null;   } }
 
 class TableDisplay extends Component {
     constructor() {
         super();
-        this.state = {
-            users: [],
-            loadDataSource: false
-        }
+        this.state = {}
     }
-    async componentDidMount() {
-        const res = await axios.get('https://jsonplaceholder.typicode.com/users');
-        this.setState({users: res.data, loadDataSource: true});
+
+    handledDelete = (key) => {
+        this
+            .props
+            .deleteUser(key);
+    }
+
+    componentDidMount() {
+        // const res = await axios.get('https://jsonplaceholder.typicode.com/users');
+        // this.setState({users: res.data, loadDataSource: true});
+        this
+            .props
+            .getUsers();
 
     }
     render() {
-        let dataSource = this.state.users;
+        let dataSource = this.props.users;
 
-        let loadDataSource = this.state.loadDataSource;
         const columns = [
             {
                 title: 'Name',
@@ -39,6 +50,23 @@ class TableDisplay extends Component {
                 title: 'Phone',
                 dataIndex: 'phone',
                 key: 'phone'
+            }, {
+                title: 'operation',
+                dataIndex: 'operation',
+                render: (text, record) => (
+                    <React.Fragment>
+
+                        <Link to={`contact/edit/${record.key}`}>
+                            <Button type="primary"  shape="circle" icon="edit"/>
+                        </Link>
+
+                        <Popconfirm
+                            title="Sure to delete?"
+                            onConfirm={() => this.handledDelete(record.key)}>
+                            <Button type="danger"  shape="circle" icon="close"/>
+                        </Popconfirm>
+                    </React.Fragment>
+                )
             }
         ];
         return (
@@ -48,19 +76,19 @@ class TableDisplay extends Component {
                 width: '95vw',
                 margin: 'auto'
             }}>
-                {(loadDataSource)
-                    ? <Table dataSource={dataSource} columns={columns}/>
-                    : <Icon
-                        type="loading"
-                        style={{
-                        fontSize: 24,
-                        margin:'auto'
-                    }}
-                        spin/>}
+
+                <Table dataSource={dataSource} columns={columns}/>
 
             </Card>
         )
     }
 }
+TableDisplay.propTypes = {
+    users: PropTypes.array.isRequired,
+    getUsers: PropTypes.func.isRequired,
+    deleteUser: PropTypes.func.isRequired,
+}
 
-export default TableDisplay;
+const mapStateToProps = (state) => ({users: state.users.users})
+
+export default connect(mapStateToProps, {getUsers,deleteUser})(TableDisplay);
