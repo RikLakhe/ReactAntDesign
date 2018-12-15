@@ -1,7 +1,9 @@
 import React, {Component} from 'react'
-
-import {Form, Button, Input,Card} from 'antd';
-
+import uuid from 'uuid';
+import PropTypes from 'prop-types'   
+import { connect } from 'react-redux';
+import {Form, Button, Input, Card} from 'antd';
+import {addUser} from '../../../store/actions/usersActions'
 const FormItem = Form.Item;
 
 class FormDisplay extends Component {
@@ -9,11 +11,10 @@ class FormDisplay extends Component {
 
     state = {
         confirmDirty: false,
-        firstName: '',
-        lastName: '',
-        email: '',
-        phone: '',
-        password: ''
+        key: '',
+        name: '',
+        userName: '',
+        userPhone: ''
     }
 
     handleSubmit = (e) => {
@@ -26,13 +27,16 @@ class FormDisplay extends Component {
                 if (!err) {
                     console.log('Received values of form: ', values);
                 }
-                this.state.email = values.email;
-                this.state.firstName = values.firstName;
-                this.state.lastName = values.lastName;
-                this.state.phone = values.phone;
-                this.state.password = values.password;
+                const newUser = {
+                    key : uuid(),
+                    name : values.name,
+                    phone : values.userPhone,
+                    username : values.userName
+                }
+                this.props.addUser(newUser);
+                console.log(newUser);
             });
-        console.log('submited', this.state);
+        this.props.history.push('/users');
     }
 
     handleConfirmBlur = (e) => {
@@ -43,8 +47,8 @@ class FormDisplay extends Component {
     }
     // compareToFirstPassword = (rule, value, callback) => {     const form =
     // this.props.form;     if (value && value !== form.getFieldValue('password')) {
-    //         callback('Two passwords that you enter is inconsistent!');     }
-    // else {         callback();     } } validateToNextPassword = (rule, value,
+    //         callback('Two passwords that you enter is inconsistent!');     } else
+    // {         callback();     } } validateToNextPassword = (rule, value,
     // callback) => {     const form = this.props.form;     if (value &&
     // this.state.confirmDirty) {         form.validateFields(['confirm'], {force:
     // true});     }     callback(); }
@@ -89,50 +93,30 @@ class FormDisplay extends Component {
                 margin: 'auto'
             }}>
                 <Form onSubmit={this.handleSubmit}>
-                    <FormItem {...formItemLayout} label="E-mail">{getFieldDecorator('email', {
+
+                    <FormItem {...formItemLayout} label="Name">{getFieldDecorator('name', {
                             rules: [
                                 {
-                                    type: 'email',
-                                    message: 'The input is not valid E-mail!'
-                                }, {
                                     required: true,
-                                    message: 'Please input your E-mail!'
+                                    message: 'Please input your Name!'
                                 }
                             ]
                         })(<Input/>)}
                     </FormItem>
-                    <FormItem {...formItemLayout} label="First Name">{getFieldDecorator('firstName', {
+                    <FormItem {...formItemLayout} label="Username">{getFieldDecorator('userName', {
                             rules: [
                                 {
                                     required: true,
-                                    message: 'Please input your First Name!'
+                                    message: 'Please input your username!'
                                 }
                             ]
                         })(<Input/>)}
                     </FormItem>
-                    <FormItem {...formItemLayout} label="Last Name">{getFieldDecorator('lastName', {
-                            rules: [
-                                {
-                                    required: true,
-                                    message: 'Please input your Last Name!'
-                                }
-                            ]
-                        })(<Input/>)}
-                    </FormItem>
-                    <FormItem {...formItemLayout} label="Phone">{getFieldDecorator('phone', {
+                    <FormItem {...formItemLayout} label="Phone">{getFieldDecorator('userPhone', {
                             rules: [
                                 {
                                     required: true,
                                     message: 'Please input your Phone!'
-                                }
-                            ]
-                        })(<Input/>)}
-                    </FormItem>
-                    <FormItem {...formItemLayout} label="Password">{getFieldDecorator('password', {
-                            rules: [
-                                {
-                                    required: true,
-                                    message: 'Please input your Password!'
                                 }
                             ]
                         })(<Input/>)}
@@ -148,4 +132,8 @@ class FormDisplay extends Component {
 
 const WrapperdFormDisplay = Form.create()(FormDisplay);
 
-export default WrapperdFormDisplay;
+WrapperdFormDisplay.propTypes={
+    addUser:PropTypes.func.isRequired
+}
+
+export default connect(null,{addUser})(WrapperdFormDisplay);

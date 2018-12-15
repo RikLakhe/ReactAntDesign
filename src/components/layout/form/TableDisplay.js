@@ -56,7 +56,7 @@ class TableDisplay extends Component {
                 render: (text, record) => (
                     <React.Fragment>
 
-                        <Link to={`contact/edit/${record.key}`}>
+                        <Link to={`/edituser/${record.key}`}>
                             <Button type="primary"  shape="circle" icon="edit"/>
                         </Link>
 

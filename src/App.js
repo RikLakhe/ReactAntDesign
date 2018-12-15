@@ -7,6 +7,8 @@ import Navbar from './components/layout/navbar/navBar'
 import MainDisplay from './components/layout/content/mainDisplay'
 import TableDisplay from './components/layout/form/TableDisplay'
 import FormDisplay from './components/layout/form/FormDisplay'
+import EditDisplay from './components/layout/form/EditDisplay'
+
 
 import 'antd/dist/antd.css';
 
@@ -30,6 +32,7 @@ class App extends Component {
                             <Route exact path="/" component={MainDisplay}/>
                             <Route exact path="/users" component={TableDisplay}/>
                             <Route exact path="/adduser" component={FormDisplay}/>
+                            <Route exact path="/edituser/:id" component={EditDisplay}/>
 
                         </Switch>
 
